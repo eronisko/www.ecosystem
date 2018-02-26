@@ -2,7 +2,37 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :services, path: :sluzby do
-    resources :autoform
+    resources :govbox do
+      collection do
+        get :faq, path: 'casto-kladene-otazky'
+        get :register_step1, path: 'registracia'
+        post :register_step2, path: 'registracia-statutar'
+        post :register_step3, path: 'registracia-nastavenie'
+        post :register_step4, path: 'registracia-zabezpecenie'
+        post :register_step5, path: 'registracia-odoslanie'
+        get :register_thanks, path: 'registracia-uspesna'
+
+        get :terms, path: 'vseobecne-obchodne-podmienky'
+        get :terms_v1, path: 'vseobecne-obchodne-podmienky-v1'
+        get :privacy_policy, path: 'ochrana-osobnych-udajov'
+        get :service_provider, path: 'prevadzkovatel'
+        get :pricing, path: 'cennik'
+        get :pricing_v1, path: 'cennik-v1'
+
+        # redirects
+        get 'registracia-statutar', to: 'govbox#back_to_step1'
+        get 'registracia-nastavenie', to: 'govbox#back_to_step1'
+        get 'registracia-zabezpecenie', to: 'govbox#back_to_step1'
+        get 'registracia-odoslanie', to: 'govbox#back_to_step1'
+      end
+    end
+
+    resources :autoform do
+      collection do
+        get :integration_manual, path: 'integracny-manual'
+      end
+    end
+
     resources :datahub
   end
 
